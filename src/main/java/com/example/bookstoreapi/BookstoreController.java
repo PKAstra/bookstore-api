@@ -35,4 +35,8 @@ public class BookstoreController {
         return new ResponseEntity(this.bookstoreService.getAllBookComments(), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/getAllBookRatings")
+    public ResponseEntity getAllBookRatings(){
+        return new ResponseEntity(this.bookstoreService.getAllBookRatings(), HttpStatus.ACCEPTED);
+    }
 }

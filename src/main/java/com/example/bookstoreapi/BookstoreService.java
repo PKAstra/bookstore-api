@@ -17,6 +17,8 @@ public class BookstoreService {
     BookstoreWishlistBooks bookstoreWishlistBooks;
     @Autowired
     BookstoreComment bookstoreComment;
+    @Autowired
+    BookstoreRating bookstoreRating;
     
     public List<Book> getAllBooks(){
         // logic
@@ -36,5 +38,9 @@ public class BookstoreService {
     public List<Comment> getAllBookComments(){
         // logic
         return bookstoreComment.findAll();
+    }
+
+    public List<Rating> getAllBookRatings(){
+        return  bookstoreRating.findAll();
     }
 }
