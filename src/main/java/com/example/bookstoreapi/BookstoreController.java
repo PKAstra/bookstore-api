@@ -30,4 +30,9 @@ public class BookstoreController {
         return new ResponseEntity(this.bookstoreService.getAllBooksFromWishlist(), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/getAllBookComments")
+    public ResponseEntity getAllBookComments(){
+        return new ResponseEntity(this.bookstoreService.getAllBookComments(), HttpStatus.ACCEPTED);
+    }
+
 }
