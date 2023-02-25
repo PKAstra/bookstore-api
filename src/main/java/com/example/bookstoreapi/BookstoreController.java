@@ -24,10 +24,10 @@ public class BookstoreController {
     }
 
     @DeleteMapping("/removeBookWishlist")
-    public void removeBookWishlist(
+    public ResponseEntity deleteBookWishlist(
             @RequestParam(value = "wishlist_id") Integer wishlist_id,
             @RequestParam(value = "book_id") Integer book_id){
-        bookstoreService.deleteBookWishlist(wishlist_id, book_id);
+        return this.bookstoreService.deleteBookWishlist(wishlist_id, book_id);
     }
 
     @GetMapping("/getAllBooksFromWishlist")

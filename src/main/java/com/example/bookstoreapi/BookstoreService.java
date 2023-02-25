@@ -2,6 +2,8 @@
 package com.example.bookstoreapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -33,8 +35,16 @@ public class BookstoreService {
         return bookstoreWishlistBooks.findAll();
     }
 
-    public void deleteBookWishlist(Integer wishlist_id, Integer book_id){
-        
+    public ResponseEntity deleteBookWishlist(Integer wishlist_id, Integer book_id){
+        WishlistBooks wishlistBooks = bookstoreWishlistBooks.findBookWishlist(wishlist_id, book_id);
+
+        if(null != wishlistBooks){
+            bookstoreWishlistBooks.delete(wishlistBooks);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
     }
 
     public List<Comment> getAllBookComments(){
