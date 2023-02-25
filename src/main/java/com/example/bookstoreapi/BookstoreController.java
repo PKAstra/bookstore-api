@@ -4,9 +4,7 @@ package com.example.bookstoreapi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bookstore")
@@ -23,6 +21,13 @@ public class BookstoreController {
     @GetMapping("/getAllBooksWishlist")
     public ResponseEntity getAllBooksWishlist(){
         return new ResponseEntity(this.bookstoreService.getAllBooksWishlist(), HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/removeBookWishlist")
+    public void removeBookWishlist(
+            @RequestParam(value = "wishlist_id") Integer wishlist_id,
+            @RequestParam(value = "book_id") Integer book_id){
+        bookstoreService.deleteBookWishlist(wishlist_id, book_id);
     }
 
     @GetMapping("/getAllBooksFromWishlist")

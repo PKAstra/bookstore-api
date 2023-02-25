@@ -12,7 +12,7 @@ public class BookstoreService {
     @Autowired
     BookstoreRepository bookstoreRepo;
     @Autowired
-    BookstoreWishlist bookstoreWish;
+    BookstoreWishlistRepository bookstoreWish;
     @Autowired
     BookstoreWishlistBooks bookstoreWishlistBooks;
     @Autowired
@@ -31,6 +31,10 @@ public class BookstoreService {
     public List<WishlistBooks> getAllBooksFromWishlist(){
         // logic
         return bookstoreWishlistBooks.findAll();
+    }
+
+    public void deleteBookWishlist(Integer wishlist_id, Integer book_id){
+        
     }
 
     public List<Comment> getAllBookComments(){
