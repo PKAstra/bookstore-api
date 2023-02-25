@@ -1,5 +1,6 @@
 package com.example.bookstoreapi;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,7 +10,9 @@ import javax.persistence.Table;
 public class WishlistBooks {
     @Id
     private Integer id;
+    @Column(name="wishlist_id")
     private Integer wishlist_id;
+    @Column(name="book_id")
     private Integer book_id;
 
     public WishlistBooks() {
