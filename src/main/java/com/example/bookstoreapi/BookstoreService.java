@@ -1,14 +1,20 @@
 
 package com.example.bookstoreapi;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 
 @Service
 public class BookstoreService {
-    
+
+    private static final Logger logger = LoggerFactory.getLogger(BookstoreService.class);
+
     @Autowired
     BookstoreRepository bookstoreRepo;
     @Autowired
@@ -41,4 +47,20 @@ public class BookstoreService {
         // logic
         return bookstoreComment.findAll();
     }
+
+    public ResponseEntity<?> findBooksByGenre(String genre){
+        logger.info("Books with genre to find: " + genre);
+        List<Book> books = bookstoreRepo.findBookByGenre(genre);
+
+        if(!books.isEmpty()){
+            logger.info("Book found and deleting from db");
+            return new ResponseEntity<>(books, HttpStatus.OK);
+        }else{
+            logger.error("Books not found with genre: " + genre);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 }
+

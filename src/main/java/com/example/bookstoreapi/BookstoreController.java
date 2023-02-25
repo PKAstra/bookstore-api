@@ -15,7 +15,7 @@ public class BookstoreController {
 
     @GetMapping("/getAllBooks")
     public ResponseEntity getAllBooks(){
-        return new ResponseEntity(this.bookstoreService.getAllBooks(), HttpStatus.ACCEPTED);
+        return new ResponseEntity(this.bookstoreService.getAllBooks(), HttpStatus.OK);
     }
 
     @GetMapping("/getAllBooksWishlist")
@@ -40,4 +40,8 @@ public class BookstoreController {
         return new ResponseEntity(this.bookstoreService.getAllBookComments(), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/getBooksByGenre/{genre}")
+    public ResponseEntity getBooksByGenre(@PathVariable("genre") String genre){
+        return this.bookstoreService.findBooksByGenre(genre);
+    }
 }
