@@ -39,8 +39,16 @@ public class BookstoreService {
         return bookstoreWishlistBooks.findAll();
     }
 
-    public void deleteBookWishlist(Integer wishlist_id, Integer book_id){
-        
+    public ResponseEntity deleteBookWishlist(Integer wishlist_id, Integer book_id){
+        WishlistBooks wishlistBooks = bookstoreWishlistBooks.findBookWishlist(wishlist_id, book_id);
+
+        if(null != wishlistBooks){
+            bookstoreWishlistBooks.delete(wishlistBooks);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
     }
 
     public List<Comment> getAllBookComments(){
