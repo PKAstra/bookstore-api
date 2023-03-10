@@ -33,13 +33,5 @@ public class ShoppingCartDTO
         this.items = items;
     }
 
-    @Override
-    public String toString()
-    {
-        return "ShoppingCartDTO{" +
-                "customerID=" + customerID + '\'' +
-                ", items=" + items +
-                '}';
-    }
 
 }

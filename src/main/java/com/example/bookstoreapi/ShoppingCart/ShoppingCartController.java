@@ -1,11 +1,10 @@
 package com.example.bookstoreapi.ShoppingCart;
 
 import com.example.bookstoreapi.BookstoreService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,19 +14,17 @@ public class ShoppingCartController
 {
     private ShoppingCartService shoppingCartService;
     private BookstoreService bookstoreService;
-    private CustomerService customerService;
 
     //Constructors
-    public ShoppingCartController(ShoppingCartService shoppingCartService, BookstoreService bookstoreService, CustomerService customerService)
+    public ShoppingCartController(ShoppingCartService shoppingCartService, BookstoreService bookstoreService)
     {
         this.shoppingCartService = shoppingCartService;
         this.bookstoreService = bookstoreService;
-        this.customerService = customerService;
     }
 
-    private Logger logger = LoggerFactory.getLogger(ShoppingCartController.class);
 
     //Mapping Functions
+    //Retrieves User's Shopping Cart
     @GetMapping(value = "/{userid}")
     public ResponseEntity<ShoppingCart> getShoppingCart(@PathVariable int userid)
     {
@@ -35,39 +32,46 @@ public class ShoppingCartController
         return ResponseEntity.ok(shoppingCart);
     }
 
+    //Adds Book to Shopping Cart
     @PostMapping("/addbook")
-    public ResponseEntity<ResponseShoppingCartDTO> addBook(@RequestBody List<ShoppingCartItem> items)
+    public ResponseEntity<ResponseShoppingCartDTO> addBook(@RequestBody  ShoppingCartDTO cart)
     {
-        ShoppingCartDTO shoppingCartDTO = new ShoppingCartDTO(1, items);
-        logger.info("Request Payload " + shoppingCartDTO.toString());
-        ResponseShoppingCartDTO responseShoppingCartDTO = new ResponseShoppingCartDTO();
-        double subtotal = shoppingCartService.getShoppingCartSubtotal(shoppingCartDTO.getItems());
+        int customerID = cart.getCustomerID();
+        //Shopping Cart Item List
+        List<ShoppingCartItem> shoppingCartItems = new ArrayList<>();
 
-        Customer customer = new Customer(shoppingCartDTO.getCustomerID());
-        Integer customerIdFromDb = customerService.isCustomerPresent(customer);
-        //Customer Exists I.E. Has a Shopping Cart
-        if (customerIdFromDb != null) {
-            customer.setId(customerIdFromDb);
-            logger.info("Customer already present in db with id : " + customerIdFromDb);
+
+        //If Customer Does NOT have an Existing Shopping Cart
+        if (shoppingCartService.getShoppingCart(customerID) == null)
+        {
+            //Adds Book to Shopping Cart Based Off bookID
+            shoppingCartItems.add(shoppingCartService.addBookForNewCustomer(cart.getItems()));
         }
-        //Customer Does Not Exist
+        //If Customer Already has an Existing Shopping Cart
         else
         {
-            customer = customerService.saveCustomer(customer);
-            logger.info("Customer saved.. with id : " + customer.getId());
+            ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(customerID);
+            //Adds New Book to Shopping Cart List Along With Existing Items
+            shoppingCartItems = shoppingCartService.addBookForExistingCustomer(shoppingCart, cart.getItems());
         }
 
-        ShoppingCart shoppingCart = new ShoppingCart(customer, shoppingCartDTO.getItems());
-        shoppingCart = shoppingCartService.saveOrder(shoppingCart);
-        logger.info("Order processed successfully..");
+
+        ShoppingCartDTO shoppingCartDTO = new ShoppingCartDTO(customerID, shoppingCartItems);
+
+        //Calculates Shopping Cart Subtotal
+        double subtotal = shoppingCartService.getShoppingCartSubtotal(shoppingCartDTO.getItems());
+
+        ShoppingCart shoppingCart = new ShoppingCart(customerID, shoppingCartItems, subtotal);
+        shoppingCartService.saveShoppingCart(shoppingCart);
+
+
+
+        ResponseShoppingCartDTO responseShoppingCartDTO = new ResponseShoppingCartDTO();
+
 
         responseShoppingCartDTO.setShoppingCartSubtotal(subtotal);
         responseShoppingCartDTO.setCustomerID(shoppingCartDTO.getCustomerID());
-        responseShoppingCartDTO.setOrderID(shoppingCart.getId());
-        //ResponseShoppingCartDTO.setCustomerID(shoppingCartDTO.getCustomerID());
 
-
-        logger.info("test push..");
 
         return ResponseEntity.ok(responseShoppingCartDTO);
     }

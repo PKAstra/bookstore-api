@@ -1,45 +1,36 @@
 package com.example.bookstoreapi.ShoppingCart;
 
+import com.example.bookstoreapi.Book;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Optional;
 
 @Entity
 public class ShoppingCartItem
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
     private int bookID;
     private String bookName;
     private double bookPrice;
 
+
     //Constructors
-    public ShoppingCartItem() {
-    }
-
-    public ShoppingCartItem(int bookID)
+    public ShoppingCartItem()
     {
-        this.bookID = bookID;
-    }
 
-    public ShoppingCartItem(int bookID, String bookName, int bookPrice) {
-        this.bookID = bookID;
-        this.bookName = bookName;
-        this.bookPrice = bookPrice;
+    }
+    public ShoppingCartItem(Optional<Book> book)
+
+    {
+        Book book1 = book.get();
+        this.bookID = book1.getBookId();
+        this.bookName = book1.getTitle();
+        this.bookPrice = book1.getPrice();
+
     }
 
     //Getters and Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getBookID() {
         return bookID;
     }
@@ -62,12 +53,5 @@ public class ShoppingCartItem
 
     public void setBookPrice(double bookPrice) {
         this.bookPrice = bookPrice;
-    }
-
-    @Override
-    public String toString() {
-        return "ShoppingCartItem{" +
-                ", bookId=" + bookID +
-                '}';
     }
 }

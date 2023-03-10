@@ -4,11 +4,10 @@ public class ResponseShoppingCartDTO
 {
 
     private int customerID;
-    private String status = "Book(s) Added";
-    private int shoppingCartID;
-    private int orderID;
+    private String status = "Book Added";
     private double shoppingCartSubtotal;
 
+    //Setters and Getters
     public int getCustomerID() {
         return customerID;
     }
@@ -23,22 +22,6 @@ public class ResponseShoppingCartDTO
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public int getShoppingCartID() {
-        return shoppingCartID;
-    }
-
-    public void setShoppingCartID(int shoppingCartID) {
-        this.shoppingCartID = shoppingCartID;
-    }
-
-    public int getOrderID() {
-        return orderID;
-    }
-
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
     }
 
     public double getShoppingCartSubtotal() {

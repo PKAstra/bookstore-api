@@ -4,45 +4,40 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "ShoppingCart")
+@Table(name = "shopping_cart")
 public class ShoppingCart
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = ShoppingCartItem.class)
     @JoinColumn(name = "shoppingcart_id", referencedColumnName = "id")
     private List<ShoppingCartItem> items;
 
+    private double subtotal;
+
     //Constructors
     public ShoppingCart() {
     }
-    public ShoppingCart(Customer customer, List<ShoppingCartItem> items) {
-        this.customer = customer;
+
+    public ShoppingCart(int customerID, List<ShoppingCartItem> items)
+    {
+        this.id = customerID;
         this.items = items;
     }
 
-    //Getters and Setters
-    public int getId() {
+    public ShoppingCart(int id, List<ShoppingCartItem> items, double subtotal) {
+        this.id = id;
+        this.items = items;
+        this.subtotal = subtotal;
+    }
+
+    public int getCustomerID() {
         return id;
     }
 
-    public void setId(int id)
-    {
-        this.id = id;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerID(int customerID) {
+        this.id = customerID;
     }
 
     public List<ShoppingCartItem> getItems() {
@@ -51,5 +46,13 @@ public class ShoppingCart
 
     public void setItems(List<ShoppingCartItem> items) {
         this.items = items;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
     }
 }
