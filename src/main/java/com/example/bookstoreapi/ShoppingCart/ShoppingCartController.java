@@ -13,25 +13,34 @@ import java.util.List;
 public class ShoppingCartController
 {
     private ShoppingCartService shoppingCartService;
-    private BookstoreService bookstoreService;
+
 
     //Constructors
-    public ShoppingCartController(ShoppingCartService shoppingCartService, BookstoreService bookstoreService)
+    public ShoppingCartController(ShoppingCartService shoppingCartService)
     {
         this.shoppingCartService = shoppingCartService;
-        this.bookstoreService = bookstoreService;
     }
 
 
     //Mapping Functions
     //Retrieves User's Shopping Cart
-    @GetMapping(value = "/{userid}")
+    @GetMapping(value = "/user-{userid}")
     public ResponseEntity<ShoppingCart> getShoppingCart(@PathVariable int userid)
     {
         ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(userid);
         return ResponseEntity.ok(shoppingCart);
     }
 
+    //Retrieves User's Shopping Cart Subtotal
+    @GetMapping(value = "/user-{userid}/subtotal")
+    public ResponseEntity<String> getShoppingCartSubtotal(@PathVariable int userid)
+    {
+        ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(userid);
+        double subtotal = shoppingCartService.getShoppingCartSubtotal(shoppingCart.getItems());
+
+        String cartSubtotal = "Shopping Cart Subtotal: $" + subtotal;
+        return ResponseEntity.ok(cartSubtotal);
+    }
     //Adds Book to Shopping Cart
     @PostMapping("/addbook")
     public ResponseEntity<ResponseShoppingCartDTO> addBook(@RequestBody  ShoppingCartDTO cart)
@@ -58,22 +67,34 @@ public class ShoppingCartController
 
         ShoppingCartDTO shoppingCartDTO = new ShoppingCartDTO(customerID, shoppingCartItems);
 
-        //Calculates Shopping Cart Subtotal
-        double subtotal = shoppingCartService.getShoppingCartSubtotal(shoppingCartDTO.getItems());
-
-        ShoppingCart shoppingCart = new ShoppingCart(customerID, shoppingCartItems, subtotal);
+        //Saves Updated Shopping Cart
+        ShoppingCart shoppingCart = new ShoppingCart(customerID, shoppingCartItems);
         shoppingCartService.saveShoppingCart(shoppingCart);
 
 
-
+        //Response
         ResponseShoppingCartDTO responseShoppingCartDTO = new ResponseShoppingCartDTO();
-
-
-        responseShoppingCartDTO.setShoppingCartSubtotal(subtotal);
         responseShoppingCartDTO.setCustomerID(shoppingCartDTO.getCustomerID());
 
 
         return ResponseEntity.ok(responseShoppingCartDTO);
     }
 
+
+    @DeleteMapping("/deletebook/user-{userid}/book-{bookid}")
+    public ResponseEntity<String> deleteBook(@PathVariable int userid, @PathVariable int bookid)
+    {
+        String status = "Book Deleted...";
+
+        //Retrieves User's Shopping Cart
+       ShoppingCart shoppingCart =  shoppingCartService.getShoppingCart(userid);
+       List<ShoppingCartItem> shoppingCartItems = new ArrayList<>();
+       //Deletes Requested Book
+       shoppingCartItems = shoppingCartService.deleteBook(shoppingCart.getItems(), bookid);
+       //Saves New Shopping Cart
+       shoppingCart.setItems(shoppingCartItems);
+       shoppingCartService.saveShoppingCart(shoppingCart);
+
+        return ResponseEntity.ok(status);
+    }
 }

@@ -14,22 +14,15 @@ public class ShoppingCart
     @JoinColumn(name = "shoppingcart_id", referencedColumnName = "id")
     private List<ShoppingCartItem> items;
 
-    private double subtotal;
 
     //Constructors
     public ShoppingCart() {
     }
 
-    public ShoppingCart(int customerID, List<ShoppingCartItem> items)
-    {
-        this.id = customerID;
-        this.items = items;
-    }
 
-    public ShoppingCart(int id, List<ShoppingCartItem> items, double subtotal) {
+    public ShoppingCart(int id, List<ShoppingCartItem> items) {
         this.id = id;
         this.items = items;
-        this.subtotal = subtotal;
     }
 
     public int getCustomerID() {
@@ -48,11 +41,5 @@ public class ShoppingCart
         this.items = items;
     }
 
-    public double getSubtotal() {
-        return subtotal;
-    }
 
-    public void setSubtotal(double subtotal) {
-        this.subtotal = subtotal;
-    }
 }

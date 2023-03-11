@@ -22,12 +22,14 @@ public class ShoppingCartService
     }
 
 
-    //Gets
+    //Methods
+    //Retrieves User's Shopping Cart
     public ShoppingCart getShoppingCart(int userID) {
         Optional<ShoppingCart> shoppingCart = this.shoppingCartRepo.findById(userID);
         return shoppingCart.isPresent() ? shoppingCart.get() : null;
     }
 
+    //Adds New Book to Existing Customer's Shopping Cart
     public List<ShoppingCartItem> addBookForExistingCustomer(ShoppingCart shoppingCart, List<ShoppingCartItem> newBook)
     {
 
@@ -50,6 +52,7 @@ public class ShoppingCartService
 
     }
 
+    //Calculates Shopping Cart Subtotal
     public Double getShoppingCartSubtotal(List<ShoppingCartItem> shoppingCartItems)
     {
         Double shoppingCartSubtotal = 0.0;
@@ -84,6 +87,24 @@ public class ShoppingCartService
             shoppingCartItem = new ShoppingCartItem(book);
         }
         return shoppingCartItem;
+    }
+
+    public List<ShoppingCartItem> deleteBook(List<ShoppingCartItem> cart, int bookid)
+    {
+        //Creates a New Shopping Cart List
+        List<ShoppingCartItem> shoppingCartItems = new ArrayList<>();
+
+        //Copies Existing Shopping Cart MINUS Deleted Book to New Shopping Cart List
+        for(ShoppingCartItem tempBook : cart)
+        {
+            if(tempBook.getBookID() != bookid)
+            {
+                shoppingCartItems.add(tempBook);
+            }
+        }
+
+        //Returns New Shopping Cart List
+        return shoppingCartItems;
     }
 
     public ShoppingCart saveShoppingCart(ShoppingCart shoppingCart)
