@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,5 +39,10 @@ public class BookstoreController {
     @GetMapping("/getAllBookRatings")
     public ResponseEntity getAllBookRatings(){
         return new ResponseEntity(this.bookstoreService.getAllBookRatings(), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/getCommentsForBook/{book_id}")
+    public ResponseEntity getCommentsForBook(@PathVariable Integer book_id){
+        return new ResponseEntity(this.bookstoreService.getCommentsForBook(book_id), HttpStatus.ACCEPTED);
     }
 }
