@@ -61,7 +61,7 @@ public class BookstoreService {
         List<Book> books = bookstoreRepo.findBookByGenre(genre);
 
         if(!books.isEmpty()){
-            logger.info("Book found and deleting from db");
+            logger.info("Books found in db");
             return new ResponseEntity<>(books, HttpStatus.OK);
         }else{
             logger.error("Books not found with genre: " + genre);
