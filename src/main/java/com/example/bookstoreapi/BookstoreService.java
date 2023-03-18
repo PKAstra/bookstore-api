@@ -70,5 +70,17 @@ public class BookstoreService {
 
     }
 
+    public ResponseEntity<?> findTop10BooksSold(){
+        logger.info("Top 10 best selling books: ");
+        List<Book> books = bookstoreRepo.findTop10BooksByCopiesSold();
+        if(!books.isEmpty()){
+            logger.info("Books found in db.");
+            return new ResponseEntity<>(books, HttpStatus.OK);
+        }else{
+            logger.error("Books not found.");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
 }
 

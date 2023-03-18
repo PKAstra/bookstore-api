@@ -1,6 +1,7 @@
 
 package com.example.bookstoreapi;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,5 +44,10 @@ public class BookstoreController {
     @GetMapping("/getBooksByGenre/{genre}")
     public ResponseEntity getBooksByGenre(@PathVariable("genre") String genre){
         return this.bookstoreService.findBooksByGenre(genre);
+    }
+
+    @GetMapping("/getTop10BooksSold")
+    public ResponseEntity getTop10BooksSold(){
+        return this.bookstoreService.findTop10BooksSold();
     }
 }
