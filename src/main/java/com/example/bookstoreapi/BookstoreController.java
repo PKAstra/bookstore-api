@@ -50,4 +50,11 @@ public class BookstoreController {
     public ResponseEntity getTop10BooksSold(){
         return this.bookstoreService.findTop10BooksSold();
     }
+    
+        @GetMapping("/getUserByUsername/{username}")
+    public ResponseEntity getUserByUsername(String username){
+         ;
+        return new ResponseEntity(this.bookstoreService.getUserByUsername(username), HttpStatus.ACCEPTED);
+    }
+
 }
