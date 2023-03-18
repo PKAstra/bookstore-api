@@ -23,6 +23,8 @@ public class BookstoreService {
     BookstoreWishlistBooks bookstoreWishlistBooks;
     @Autowired
     BookstoreComment bookstoreComment;
+     @Autowired
+    UserRepository userRepository; 
     
     public List<Book> getAllBooks(){
         // logic
@@ -82,5 +84,9 @@ public class BookstoreService {
         }
     }
 
+       public List<User> getUserByUsername(String username){
+       //  logic
+        return userRepository.findAll();
+    }
 }
 
