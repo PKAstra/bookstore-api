@@ -67,7 +67,7 @@ public class BookstoreService {
             return new ResponseEntity<>(books, HttpStatus.OK);
         }else{
             logger.error("Books not found with genre: " + genre);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
     }
@@ -80,6 +80,19 @@ public class BookstoreService {
             return new ResponseEntity<>(books, HttpStatus.OK);
         }else{
             logger.error("Books not found.");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    public ResponseEntity<?> findBooksByRating(Double rating) {
+        logger.info("Books with rating " + rating + " or higher:");
+        List<Book> books = bookstoreRepo.findBooksByRating(rating);
+
+        if (!books.isEmpty()) {
+            logger.info("Books found in db");
+            return new ResponseEntity<>(books, HttpStatus.OK);
+        } else {
+            logger.error("No books found with rating " + rating + " or higher");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
