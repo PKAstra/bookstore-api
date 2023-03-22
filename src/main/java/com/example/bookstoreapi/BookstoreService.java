@@ -23,6 +23,8 @@ public class BookstoreService {
     BookstoreWishlistBooks bookstoreWishlistBooks;
     @Autowired
     BookstoreComment bookstoreComment;
+     @Autowired
+    UserRepository userRepository; 
     
     public List<Book> getAllBooks(){
         // logic
@@ -82,6 +84,7 @@ public class BookstoreService {
         }
     }
 
+<<<<<<< HEAD
     public ResponseEntity<?> findBooksByRating(Double rating) {
         logger.info("Books with rating " + rating + " or higher:");
         List<Book> books = bookstoreRepo.findBooksByRating(rating);
@@ -95,5 +98,11 @@ public class BookstoreService {
         }
     }
 
+=======
+       public List<User> getUserByUsername(String username){
+       //  logic
+        return userRepository.findAll();
+    }
+>>>>>>> main
 }
 
