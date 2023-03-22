@@ -50,4 +50,9 @@ public class BookstoreController {
     public ResponseEntity getTop10BooksSold(){
         return this.bookstoreService.findTop10BooksSold();
     }
+
+    @GetMapping("/getBooksByRating/{rating}")
+    public ResponseEntity getBooksByRating(@PathVariable("rating") Double rating){
+        return this.bookstoreService.findBooksByRating(rating);
+    }
 }
