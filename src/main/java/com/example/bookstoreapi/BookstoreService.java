@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -49,8 +50,17 @@ public class BookstoreService {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
         }
+    }
+
+    public ResponseEntity addBookWishlist(Integer wishlist_id, Integer book_id){
+        bookstoreWishlistBooks.addBookWishlistQuery(wishlist_id, book_id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity addWishlist(String wishlist_name, Integer user_id){
+        bookstoreWish.addWishlistQuery(wishlist_name, user_id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public List<Comment> getAllBookComments(){
