@@ -24,6 +24,11 @@ public class BookstoreController {
         return new ResponseEntity(this.bookstoreService.getAllBooksWishlist(), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/getAllBooksFromWishlist")
+    public ResponseEntity getAllBooksFromWishlist(){
+        return new ResponseEntity(this.bookstoreService.getAllBooksFromWishlist(), HttpStatus.ACCEPTED);
+    }
+
     @DeleteMapping("/removeBookWishlist")
     public ResponseEntity deleteBookWishlist(
             @RequestParam(value = "wishlist_id") Integer wishlist_id,
@@ -31,9 +36,18 @@ public class BookstoreController {
         return this.bookstoreService.deleteBookWishlist(wishlist_id, book_id);
     }
 
-    @GetMapping("/getAllBooksFromWishlist")
-    public ResponseEntity getAllBooksFromWishlist(){
-        return new ResponseEntity(this.bookstoreService.getAllBooksFromWishlist(), HttpStatus.ACCEPTED);
+    @PostMapping("/addBookWishlist")
+    public ResponseEntity addBookWishlist(
+            @RequestParam(value = "wishlist_id") Integer wishlist_id,
+            @RequestParam(value = "book_id") Integer book_id){
+        return this.bookstoreService.addBookWishlist(wishlist_id, book_id);
+    }
+
+    @PostMapping("/addWishlist")
+    public ResponseEntity addWishlist(
+            @RequestParam(value = "wishlist_name") String wishlist_name,
+            @RequestParam(value = "user_id") Integer user_id){
+        return this.bookstoreService.addWishlist(wishlist_name, user_id);
     }
 
     @GetMapping("/getAllBookComments")
