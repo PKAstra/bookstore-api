@@ -84,9 +84,16 @@ public class BookstoreService {
         }
     }
 
-       public List<User> getUserByUsername(String username){
+     public ResponseEntity<?> getUserByUsername(String username){
        //  logic
-        return userRepository.findAll();
+           logger.info("Matching Users:");
+           List<User> users = userRepository.getUserByUsername(username);
+           return new ResponseEntity<>(users,HttpStatus.OK);
+       }
+    
+    public ResponseEntity createUser(String username, String password, String name, String email, String home_address){
+        userRepository.createUser(username, password, email, name, home_address);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 
