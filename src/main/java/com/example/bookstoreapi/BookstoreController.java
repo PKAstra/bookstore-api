@@ -51,10 +51,19 @@ public class BookstoreController {
         return this.bookstoreService.findTop10BooksSold();
     }
     
-        @GetMapping("/getUserByUsername/{username}")
-    public ResponseEntity getUserByUsername(String username){
-         ;
+    @GetMapping("/getUserByUsername/{username}")
+    public ResponseEntity getUserByUsername(@PathVariable("username") String username) {
         return new ResponseEntity(this.bookstoreService.getUserByUsername(username), HttpStatus.ACCEPTED);
     }
+    @PostMapping("/createUser")
+    public ResponseEntity createUser(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "password")  String password,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "home_address") String home_address){
+        return this.bookstoreService.createUser(username, password, name, email, home_address);
+    }
+
 
 }
