@@ -85,7 +85,7 @@ public class BookstoreController {
     }
 
 //    KENNETH ENDPOINT CONTROLLER
-    @PostMapping("/addBook")
+    @PostMapping("/addBooks")
     public ResponseEntity addBook(
             @RequestParam(value = "ISBN") String ISBN,
             @RequestParam(value = "title") String title,
