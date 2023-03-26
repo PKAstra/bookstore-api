@@ -16,7 +16,6 @@ public interface BookstoreRepository extends JpaRepository<Book, Integer> {
     @Query(value = "SELECT * FROM books ORDER BY copies_sold DESC LIMIT 10", nativeQuery = true)
     public List<Book> findTop10BooksByCopiesSold();
 
-//    KENNETH ENDPOINT QUERY
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query(value = "INSERT INTO books (isbn, title, description, author, genre, price, copies_sold, publisher, year_published, book_id) VALUES (?1, ?2, ?3, ?5, ?6, ?4, ?9, ?7, ?8, 6)", nativeQuery = true)

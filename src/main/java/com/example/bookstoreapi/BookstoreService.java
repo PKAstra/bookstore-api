@@ -77,7 +77,7 @@ public class BookstoreService {
             return new ResponseEntity<>(books, HttpStatus.OK);
         }else{
             logger.error("Books not found with genre: " + genre);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
     }
@@ -94,9 +94,30 @@ public class BookstoreService {
         }
     }
 
-       public List<User> getUserByUsername(String username){
+    public ResponseEntity<?> findBooksByRating(Double rating) {
+        logger.info("Books with rating " + rating + " or higher:");
+        List<Book> books = bookstoreRepo.findBooksByRating(rating);
+
+        if (!books.isEmpty()) {
+            logger.info("Books found in db");
+            return new ResponseEntity<>(books, HttpStatus.OK);
+        } else {
+            logger.error("No books found with rating " + rating + " or higher");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+       public ResponseEntity<?> getUserByUsername(String username){
        //  logic
-        return userRepository.findAll();
+           logger.info("Matching Users:");
+           List<User> users = userRepository.getUserByUsername(username);
+
+
+           return new ResponseEntity<>(users,HttpStatus.OK);
+       }
+    public ResponseEntity createUser(String username, String password, String name, String email, String home_address){
+        userRepository.createUser(username, password, name, email, home_address);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 //    KENNETH ENDPOINT SERVICE
