@@ -71,4 +71,19 @@ public class BookstoreController {
         return new ResponseEntity(this.bookstoreService.getUserByUsername(username), HttpStatus.ACCEPTED);
     }
 
+//    KENNETH ENDPOINT CONTROLLER
+    @PostMapping("/addBook")
+    public ResponseEntity addBook(
+            @RequestParam(value = "ISBN") String ISBN,
+            @RequestParam(value = "title") String title,
+            @RequestParam(value = "description") String description,
+            @RequestParam(value = "price") Double price,
+            @RequestParam(value = "author") String author,
+            @RequestParam(value = "genre") String genre,
+            @RequestParam(value = "publisher") String publisher,
+            @RequestParam(value = "year") Integer year,
+            @RequestParam(value = "copies_sold") Integer copies_sold){
+        return new ResponseEntity(this.bookstoreService.addNewBook(ISBN, title, description, price, author, genre, publisher, year, copies_sold), HttpStatus.OK);
+    }
+
 }
