@@ -119,5 +119,11 @@ public class BookstoreService {
         userRepository.createUser(username, password, name, email, home_address);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+//    KENNETH ENDPOINT SERVICE
+    public ResponseEntity addNewBook(String ISBN, String title, String description, Double price, String author, String genre, String publisher, Integer year, Integer copies_sold){
+        bookstoreRepo.addNewBook(ISBN, title, description, price, author, genre, publisher, year, copies_sold);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 
