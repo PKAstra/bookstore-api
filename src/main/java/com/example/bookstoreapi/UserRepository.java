@@ -10,6 +10,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, String> {
     @Query(value = "SELECT b FROM User b WHERE b.username = ?1")
     public List<User> getUserByUsername(String username);
+
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query(value = "INSERT INTO Users (username, password, name, email, home_address) VALUES (?1, ?2, ?3, ?4, ?5)", nativeQuery = true)

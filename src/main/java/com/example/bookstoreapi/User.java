@@ -10,7 +10,6 @@ import javax.persistence.Table;
 public class User {
 
     @Id
-    private Integer id;
     private String username;
     private String password;
     private String email;
@@ -29,14 +28,6 @@ public class User {
     }
 
      */
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer bookId) {
-        this.id = id;
-    }
 
     public String getUsername()
     {
