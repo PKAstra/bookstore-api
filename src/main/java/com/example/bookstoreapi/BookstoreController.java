@@ -81,7 +81,7 @@ public class BookstoreController {
             @RequestParam(value = "name") String name,
             @RequestParam(value = "email") String email,
             @RequestParam(value = "home_address") String home_address){
-        return this.bookstoreService.createUser(username, password, name, email, home_address);
+        return new ResponseEntity(this.bookstoreService.createUser(username, password, name, email, home_address), HttpStatus.OK);
     }
 
 //    KENNETH ENDPOINT CONTROLLER
