@@ -125,5 +125,20 @@ public class BookstoreService {
         bookstoreRepo.addNewBook(ISBN, title, description, price, author, genre, publisher, year, copies_sold);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    public List<Book> findBooksByPublisher(String publisher) {
+        return bookstoreRepo.findByPublisherName(publisher);
+    }
+
+    public ResponseEntity updateBooksDiscountByPublisher(String publisherName, Double discountPercent) {
+        List<Book> books = bookstoreRepo.findByPublisherName(publisherName);
+
+        for (Book book : books) {
+            book.setDiscountPercent(discountPercent);
+        }
+
+        bookstoreRepo.saveAll(books);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 
