@@ -4,10 +4,7 @@ package com.example.bookstoreapi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bookstore")
@@ -15,6 +12,10 @@ public class BookstoreController {
 
     @Autowired
     private BookstoreService bookstoreService;
+    @Autowired
+    private BookstoreRating bookstoreRating;
+    @Autowired
+    private BookstoreComment bookstoreComment;
 
     @GetMapping("/getAllBooks")
     public ResponseEntity getAllBooks(){
@@ -45,4 +46,16 @@ public class BookstoreController {
     public ResponseEntity getCommentsForBook(@PathVariable Integer book_id){
         return new ResponseEntity(this.bookstoreService.getCommentsForBook(book_id), HttpStatus.ACCEPTED);
     }
+    @PostMapping("/addRating")
+    public ResponseEntity<Void> createRating(@RequestBody Rating rating) {
+        bookstoreService.createRating(rating);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/addComment")
+    public ResponseEntity<?> createComment(@RequestBody Comment comment) {
+        bookstoreService.createComment(comment);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 }

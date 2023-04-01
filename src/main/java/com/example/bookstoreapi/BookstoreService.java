@@ -22,8 +22,6 @@ public class BookstoreService {
     BookstoreComment bookstoreComment;
     @Autowired
     BookstoreRating bookstoreRating;
-    @Autowired
-    UserRepository userRepository;
 
     public List<Book> getAllBooks(){
         // logic
@@ -61,4 +59,13 @@ public class BookstoreService {
         return commentsForBook;
     }
 
+    public void createRating(Rating rating) {
+        rating.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        bookstoreRating.save(rating);
+    }
+
+    public Comment createComment(Comment comment) {
+        comment.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        return bookstoreComment.save(comment);
+    }
 }
