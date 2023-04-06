@@ -95,7 +95,6 @@ public class BookstoreController {
             @RequestParam(value = "home_address") String home_address) {
         return this.bookstoreService.createUser(username, password, name, email, home_address);
     }
-
     //    KENNETH ENDPOINT CONTROLLER
     @PostMapping("/addBook")
     public ResponseEntity addBook(
