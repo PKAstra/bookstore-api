@@ -1,6 +1,5 @@
 package com.example.bookstoreapi.ShoppingCart;
 
-import com.example.bookstoreapi.ShoppingCart.ShoppingCart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
