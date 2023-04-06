@@ -5,13 +5,13 @@ import java.util.List;
 public class ShoppingCartDTO
 {
     private int customerID;
-    private List<ShoppingCartItem> items;
+    private List<ShoppingCartItems> items;
 
     //Constructors
     public ShoppingCartDTO() {
     }
 
-    public ShoppingCartDTO(int customerID, List<ShoppingCartItem> items) {
+    public ShoppingCartDTO(int customerID, List<ShoppingCartItems> items) {
         this.customerID = customerID;
         this.items = items;
     }
@@ -25,11 +25,11 @@ public class ShoppingCartDTO
         this.customerID = customerID;
     }
 
-    public List<ShoppingCartItem> getItems() {
+    public List<ShoppingCartItems> getItems() {
         return items;
     }
 
-    public void setItems(List<ShoppingCartItem> items) {
+    public void setItems(List<ShoppingCartItems> items) {
         this.items = items;
     }
 
