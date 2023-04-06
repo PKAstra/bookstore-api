@@ -1,4 +1,4 @@
-package com.example.bookstoreapi.ShoppingCart;
+package com.example.bookstoreapi.Order;
 
 import com.example.bookstoreapi.Book;
 
@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Optional;
 
 @Entity
-public class ShoppingCartItem
+public class OrderItems
 {
     @Id
     private int bookID;
@@ -16,11 +16,11 @@ public class ShoppingCartItem
 
 
     //Constructors
-    public ShoppingCartItem()
+    public OrderItems()
     {
 
     }
-    public ShoppingCartItem(Optional<Book> book)
+    public OrderItems(Optional<Book> book)
 
     {
         Book book1 = book.get();
