@@ -117,7 +117,32 @@ public class Book {
     }
 
     public void setDiscountPercent(Double discountPercent) {
-        this.discountPercent = discountPercent;
-    }
+        if (discountPercent > 1.0 || discountPercent < 0.0) {
+            throw new IllegalArgumentException("Discount percent must be between 0 and 1");
+        }
 
+        if (this.discountPercent == 0.0) {
+            // No existing discount, so just set the new discount
+            this.discountPercent = discountPercent;
+        } else if (discountPercent == 0.0) {
+            // Revert back to the original price
+            double originalPrice = this.price / (1 - this.discountPercent);
+            this.discountPercent = discountPercent;
+            this.price = originalPrice;
+        } else {
+            // There is an existing discount, so calculate the original price
+            double originalPrice = this.price / (1 - this.discountPercent);
+            // Calculate the new discount based on the original price and the new discount
+            double newDiscount = 1 - (originalPrice * (1 - discountPercent) / this.price);
+            this.discountPercent = newDiscount;
+        }
+
+        // Recalculate the price with the new discount
+        if (this.price != 0.0) {
+            this.price = calculateDiscountedPrice(this.price, this.discountPercent);
+        }
+    }
+    public Double calculateDiscountedPrice(Double price, Double discountPercent) {
+        return price * (1 - discountPercent);
+    }
 }

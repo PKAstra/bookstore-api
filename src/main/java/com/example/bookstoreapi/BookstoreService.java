@@ -138,7 +138,22 @@ public class BookstoreService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //SHOPPING CART SERVICE
+ public List<Book> findBooksByPublisher(String publisher) {
+        return bookstoreRepo.findByPublisherName(publisher);
+    }
+
+    public ResponseEntity updateBooksDiscountByPublisher(String publisherName, Double discountPercent) {
+        List<Book> books = bookstoreRepo.findByPublisherName(publisherName);
+
+        for (Book book : books) {
+            book.setDiscountPercent(discountPercent);
+        }
+
+        bookstoreRepo.saveAll(books);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+//SHOPPING CART SERVICE
 
     //Retrieves User's Shopping Cart
     public ShoppingCart getShoppingCart(int userID) {
@@ -307,6 +322,5 @@ public class BookstoreService {
     {
         return orderRepo.save(newOrder);
     }
-
 }
 

@@ -110,7 +110,21 @@ public class BookstoreController {
         return new ResponseEntity(this.bookstoreService.addNewBook(ISBN, title, description, price, author, genre, publisher, year, copies_sold), HttpStatus.OK);
     }
 
-    //SHOPPING CART CONTROLLER
+ @PatchMapping("/{publisherName}/discount/{discountPercent}")
+    public ResponseEntity<String> updateDiscountPercentByPublisherName(
+            @PathVariable String publisherName,
+            @PathVariable Double discountPercent) {
+
+        bookstoreService.updateBooksDiscountByPublisher(publisherName, discountPercent);
+        return ResponseEntity.ok("Discount percent for publisher '" + publisherName + "' updated to " + discountPercent);
+    }
+
+    @GetMapping("/getBooksByPublisher/{publisherName}")
+    public ResponseEntity getBooksByPublisher(@PathVariable("publisherName") String publisher){
+        return new ResponseEntity(this.bookstoreService.findBooksByPublisher(publisher), HttpStatus.OK);
+    }
+
+ //SHOPPING CART CONTROLLER
 
     //Retrieves User's Shopping Cart
     @GetMapping("/shopping-cart/user-{userid}")
@@ -219,6 +233,5 @@ public class BookstoreController {
 
         return ResponseEntity.ok(responseOrderDTO);
     }
-
 }
 

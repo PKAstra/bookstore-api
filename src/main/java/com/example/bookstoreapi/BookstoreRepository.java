@@ -23,4 +23,8 @@ public interface BookstoreRepository extends JpaRepository<Book, Integer> {
     @Modifying(clearAutomatically = true)
     @Query(value = "INSERT INTO books (isbn, title, description, author, genre, price, copies_sold, publisher, year_published, book_id) VALUES (?1, ?2, ?3, ?5, ?6, ?4, ?9, ?7, ?8, 6)", nativeQuery = true)
     void addNewBook(String ISBN, String title, String description, Double price, String author, String genre, String publisher, Integer year, Integer copies_sold);
+
+    @Query(value = "SELECT b FROM Book b WHERE b.publisher = ?1")
+    public List<Book> findByPublisherName(String publisherName);
+
 }
