@@ -137,8 +137,5 @@ public class BookstoreService {
         bookstoreRepo.addNewBook(ISBN, title, description, price, author, genre, publisher, year, copies_sold);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
 }
 

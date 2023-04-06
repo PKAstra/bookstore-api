@@ -113,8 +113,4 @@ public class BookstoreController {
             @RequestParam(value = "copies_sold") Integer copies_sold) {
         return new ResponseEntity(this.bookstoreService.addNewBook(ISBN, title, description, price, author, genre, publisher, year, copies_sold), HttpStatus.OK);
     }
-
-
-
-
 }
