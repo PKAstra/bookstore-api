@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -24,8 +24,10 @@ public class BookstoreService {
     BookstoreWishlistBooks bookstoreWishlistBooks;
     @Autowired
     BookstoreComment bookstoreComment;
-     @Autowired
+    @Autowired
     UserRepository userRepository; 
+    @Autowired
+    BookstoreComment bookstoreBookDetails;
     
     public List<Book> getAllBooks(){
         // logic
@@ -119,11 +121,11 @@ public class BookstoreService {
         userRepository.createUser(username, password, name, email, home_address);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-//    KENNETH ENDPOINT SERVICE
-    public ResponseEntity addNewBook(String ISBN, String title, String description, Double price, String author, String genre, String publisher, Integer year, Integer copies_sold){
-        bookstoreRepo.addNewBook(ISBN, title, description, price, author, genre, publisher, year, copies_sold);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }
+//    KENNETH ENDPOINT SERVICE
+//     public ResponseEntity addNewBook(Integer bookId, String isbn, String title, String description, String author, String genre, Double price, Integer copies_sold, String publisher, Integer yearPublished){
+//         bookstoreRepo.addNewBook(bookId, isbn, title, description, author, genre, price, copies_sold, publisher, yearPublished);
+//         return new ResponseEntity<>(HttpStatus.OK);
+//     }
+// }
 

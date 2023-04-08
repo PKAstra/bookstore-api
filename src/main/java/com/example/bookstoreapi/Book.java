@@ -1,10 +1,12 @@
-
 package com.example.bookstoreapi;
+
+import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 
 @Table(name = "books")
 @Entity
@@ -12,10 +14,9 @@ public class Book {
 
     @Id
     private Integer bookId;
-    private String isbn;
+    private String isbn; 
     private String title;
     private String description;
-    private String author;
     private String genre;
     private Double price;
     private Integer copiesSold;
@@ -23,6 +24,12 @@ public class Book {
     private String publisher;
     private Integer yearPublished;
     private Double discountPercent;
+
+    // Kenneth Richards
+    @ManyToOne
+     @JoinColumn(name = "author_id")
+     private Author author;
+
 
     public Integer getBookId() {
         return bookId;
@@ -56,11 +63,11 @@ public class Book {
         this.description = description;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
@@ -119,5 +126,12 @@ public class Book {
     public void setDiscountPercent(Double discountPercent) {
         this.discountPercent = discountPercent;
     }
+
+    public static Optional<Book> findById(Integer bookId) {
+       
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    }
+
+    
 
 }

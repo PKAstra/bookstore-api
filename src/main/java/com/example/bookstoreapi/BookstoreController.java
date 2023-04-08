@@ -2,6 +2,7 @@
 package com.example.bookstoreapi;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +10,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bookstore")
+
 public class BookstoreController {
 
     @Autowired
     private BookstoreService bookstoreService;
+
+    
+    BookstoreController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @GetMapping("/getAllBooks")
     public ResponseEntity getAllBooks(){
@@ -84,19 +91,46 @@ public class BookstoreController {
         return this.bookstoreService.createUser(username, password, name, email, home_address);
     }
 
-//    KENNETH ENDPOINT CONTROLLER
+    // Kenneth Richards
     @PostMapping("/addBook")
-    public ResponseEntity addBook(
-            @RequestParam(value = "ISBN") String ISBN,
-            @RequestParam(value = "title") String title,
-            @RequestParam(value = "description") String description,
-            @RequestParam(value = "price") Double price,
-            @RequestParam(value = "author") String author,
-            @RequestParam(value = "genre") String genre,
-            @RequestParam(value = "publisher") String publisher,
-            @RequestParam(value = "year") Integer year,
-            @RequestParam(value = "copies_sold") Integer copies_sold){
-        return new ResponseEntity(this.bookstoreService.addNewBook(ISBN, title, description, price, author, genre, publisher, year, copies_sold), HttpStatus.OK);
+    public ResponseEntity<Book> addBook(@RequestBody Book bookId) {
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+/**
+ * @param isbn
+ * @return
+ * 
+ */
+
+ @Autowired
+ private final BookService bookService;
+
+@GetMapping("/{isbn}") 
+public ResponseEntity<Book> getBookByIsbn(@RequestParam String isbn) {
+    Book book = bookService.getBookByIsbn(isbn);
+    if (book != null) {
+        return ResponseEntity.ok().body(book);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
+    
+@Autowired
+private AuthorService authorService;
+
+@PostMapping("/author")
+    public ResponseEntity<Author> addAuthor(@RequestBody Author author) {
+        Author savedAuthor = authorService.createAuthor(author);
+        return ResponseEntity.ok(savedAuthor);
+    }
+
+    // Endpoint for retrieving a list of books associated with an author
+    @GetMapping("/author/{authorId}/books")
+    public List<Book> getBooksByAuthorId(@PathVariable Long authorId) {
+        return bookService.getBooksByAuthorId(authorId);
     }
 
 }
+    
+       
+
