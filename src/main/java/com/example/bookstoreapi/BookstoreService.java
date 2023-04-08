@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +27,9 @@ public class BookstoreService {
     @Autowired
     BookstoreComment bookstoreComment;
      @Autowired
-    UserRepository userRepository; 
-    
+    UserRepository userRepository;
+    @Autowired
+    CardRepository cardRepository;
     public List<Book> getAllBooks(){
         // logic
         return bookstoreRepo.findAll();
@@ -117,6 +120,25 @@ public class BookstoreService {
        }
     public ResponseEntity createUser(String username, String password, String name, String email, String home_address){
         userRepository.createUser(username, password, name, email, home_address);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity editUser(String username, String password, String name, String email, String home_address) {
+        List<User> optionalUser = userRepository.getUserByUsername(username);
+        for (User user : optionalUser) {
+            user.setPassword(password);
+            user.setName(name);
+            user.setEmail(email);
+            user.setAddress(home_address);
+        }
+
+        userRepository.saveAll(optionalUser);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    public ResponseEntity createCard(String username, String card_number, Date expiration_date, String cvv){
+        cardRepository.createCard(username, card_number, expiration_date, cvv);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

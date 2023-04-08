@@ -7,16 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<User, String> {
-    @Query(value = "SELECT b FROM User b WHERE b.username = ?1")
-    public List<User> getUserByUsername(String username);
+public interface CardRepository extends JpaRepository<Card, String> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "INSERT INTO Users (username, password, name, email, home_address) VALUES (?1, ?2, ?3, ?4, ?5)", nativeQuery = true)
-    void createUser(String username, String password, String name, String email, String home_address);
-
-
+    @Query(value = "INSERT INTO Credit (username, card_number, expiration_date, cvv) VALUES (?1, ?2, ?3, ?4)", nativeQuery = true)
+    void createCard(String username, String card_number, Date expiration_date, String cvv);
 }

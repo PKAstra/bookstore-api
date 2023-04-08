@@ -1,4 +1,4 @@
-//Programmed By: Laeito Riley
+//Programmed By: Laeito R.
 
 package com.example.bookstoreapi;
 import javax.persistence.Entity;
@@ -80,15 +80,5 @@ public class User {
         this.home_address = home_address;
     }
 
-    /* public int getCreditCard()
-    {
-        return credit_card;
-    }
-
-    public void setCreditCard(Integer creditCard)
-    {
-        this.credit_card = creditCard;
-    }
-    */
 
 }

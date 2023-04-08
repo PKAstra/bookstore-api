@@ -1,8 +1,10 @@
 
 package com.example.bookstoreapi;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,13 +80,33 @@ public class BookstoreController {
     public ResponseEntity createUser(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password")  String password,
-            @RequestParam(value = "name") String name,
-            @RequestParam(value = "email") String email,
-            @RequestParam(value = "home_address") String home_address){
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "home_address", required = false) String home_address){
         return new ResponseEntity(this.bookstoreService.createUser(username, password, name, email, home_address), HttpStatus.OK);
     }
 
-//    KENNETH ENDPOINT CONTROLLER
+    @PatchMapping("/editUser/{username}")
+    public ResponseEntity<String> editUser(
+            @PathVariable("username") String username,
+            @RequestParam(value = "password", required = false) String password,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "home_address", required = false) String home_address){
+        bookstoreService.editUser(username, password, name, email, home_address);
+        return ResponseEntity.ok("User " + username + "has been updated!");
+    }
+
+    @PostMapping("/createCard")
+    public ResponseEntity createCard(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "card_number")  String card_number,
+            @RequestParam(value = "expiration_date") @DateTimeFormat(pattern="yyyy-MM-dd") Date expiration_date,
+            @RequestParam(value = "cvv")  String cvv){
+        return new ResponseEntity(this.bookstoreService.createCard(username, card_number, expiration_date, cvv), HttpStatus.OK);
+    }
+
+    //    KENNETH ENDPOINT CONTROLLER
     @PostMapping("/addBook")
     public ResponseEntity addBook(
             @RequestParam(value = "ISBN") String ISBN,
