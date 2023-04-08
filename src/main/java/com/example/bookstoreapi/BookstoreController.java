@@ -4,7 +4,10 @@ package com.example.bookstoreapi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/bookstore")
@@ -16,6 +19,8 @@ public class BookstoreController {
     private BookstoreRating bookstoreRating;
     @Autowired
     private BookstoreComment bookstoreComment;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/getAllBooks")
     public ResponseEntity getAllBooks(){
@@ -58,4 +63,10 @@ public class BookstoreController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @GetMapping("/{id}/average-rating")
+    public Double getBookAverageRating(@PathVariable Integer id) {
+        String query = "SELECT AVG(rating) FROM ratings WHERE book_id = ?";
+        List<Double> results = jdbcTemplate.queryForList(query, Double.class, id);
+        return results.get(0);
+    }
 }
