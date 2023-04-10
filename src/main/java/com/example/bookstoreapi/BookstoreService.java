@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.sql.Timestamp;
 
 
 @Service
 public class BookstoreService {
-
     private static final Logger logger = LoggerFactory.getLogger(BookstoreService.class);
 
     @Autowired
@@ -32,13 +32,13 @@ public class BookstoreService {
     BookstoreWishlistBooks bookstoreWishlistBooks;
     @Autowired
     BookstoreComment bookstoreComment;
-     @Autowired
+    @Autowired
     UserRepository userRepository;
     @Autowired
     ShoppingCartRepo shoppingCartRepo;
     @Autowired
     OrderRepo orderRepo;
-    
+
     public List<Book> getAllBooks(){
         // logic
         return bookstoreRepo.findAll();
@@ -119,20 +119,21 @@ public class BookstoreService {
         }
     }
 
-       public ResponseEntity<?> getUserByUsername(String username){
-       //  logic
-           logger.info("Matching Users:");
-           List<User> users = userRepository.getUserByUsername(username);
+    public ResponseEntity<?> getUserByUsername(String username){
+        //  logic
+        logger.info("Matching Users:");
+        List<User> users = userRepository.getUserByUsername(username);
 
 
-           return new ResponseEntity<>(users,HttpStatus.OK);
-       }
+        return new ResponseEntity<>(users,HttpStatus.OK);
+    }
     public ResponseEntity createUser(String username, String password, String name, String email, String home_address){
         userRepository.createUser(username, password, name, email, home_address);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    KENNETH ENDPOINT SERVICE
+
+  //    KENNETH ENDPOINT SERVICE
     public ResponseEntity addNewBook(String ISBN, String title, String description, Double price, String author, String genre, String publisher, Integer year, Integer copies_sold){
         bookstoreRepo.addNewBook(ISBN, title, description, price, author, genre, publisher, year, copies_sold);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -321,6 +322,33 @@ public class BookstoreService {
     public Order saveOrder(Order newOrder)
     {
         return orderRepo.save(newOrder);
+    }
+    
+//Ratings and Comments
+    public List<Rating> getAllBookRatings(){
+        return  bookstoreRating.findAll();
+    }
+
+    public List<Comment> getCommentsForBook(Integer book_id){
+        List<Comment> comments = bookstoreComment.findAll();
+        List<Comment> commentsForBook = new ArrayList<>();
+
+        for (Comment comment : comments) {
+            if (comment.getBook_id().equals(book_id)){
+                commentsForBook.add(comment);
+            }
+        }
+        return commentsForBook;
+    }
+
+    public void createRating(Rating rating) {
+        rating.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        bookstoreRating.save(rating);
+    }
+
+    public Comment createComment(Comment comment) {
+        comment.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        return bookstoreComment.save(comment);
     }
 }
 

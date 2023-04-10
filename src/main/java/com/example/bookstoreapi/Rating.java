@@ -6,39 +6,31 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.Timestamp;
 
-@Table(name = "comments")
+@Table(name = "ratings")
 @Entity
-public class Comment{
+public class Rating{
 
     @Id
     private Integer id;
-    private String comment;
+    private Double rating;
     private Integer book_id;
     private Integer user_id;
     private Timestamp timestamp;
-    public Comment() {
+    public Rating() {
     }
 
-    public Comment(Integer id, String comment, Integer book_id, Integer user_id, Timestamp timestamp) {
+    public Rating(Integer id, Double rating, Integer book_id, Integer user_id, Timestamp timestamp) {
         this.id = id;
-        this.comment = comment;
+        this.rating = rating;
         this.book_id = book_id;
         this.user_id = user_id;
         this.timestamp = timestamp;
     }
 
-    public Comment(String comment, Integer book_id, Integer user_id, Timestamp timestamp) {
-        this.comment = comment;
+    public Rating(Double rating, Integer book_id, Integer user_id, Timestamp timestamp) {
+        this.rating = rating;
         this.book_id = book_id;
         this.user_id = user_id;
-        this.timestamp = timestamp;
-    }
-
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -50,12 +42,12 @@ public class Comment{
         this.id = id;
     }
 
-    public String getComment() {
-        return comment;
+    public Double getRating() {
+        return rating;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     public Integer getBook_id() {
@@ -73,5 +65,12 @@ public class Comment{
     public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
-}
 
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+}
