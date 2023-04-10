@@ -1,4 +1,3 @@
-
 package com.example.bookstoreapi;
 
 import java.util.List;
@@ -31,18 +30,19 @@ public class BookstoreController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
     @GetMapping("/getAllBooks")
-    public ResponseEntity getAllBooks(){
-        return new ResponseEntity(this.bookstoreService.getAllBooks(), HttpStatus.ACCEPTED);
+    public ResponseEntity getAllBooks() {
+        return new ResponseEntity(this.bookstoreService.getAllBooks(), HttpStatus.OK);
     }
 
     @GetMapping("/getAllBooksWishlist")
-    public ResponseEntity getAllBooksWishlist(){
+    public ResponseEntity getAllBooksWishlist() {
         return new ResponseEntity(this.bookstoreService.getAllBooksWishlist(), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/getAllBooksFromWishlist")
-    public ResponseEntity getAllBooksFromWishlist(){
+    public ResponseEntity getAllBooksFromWishlist() {
         return new ResponseEntity(this.bookstoreService.getAllBooksFromWishlist(), HttpStatus.ACCEPTED);
     }
 
@@ -116,7 +116,7 @@ public class BookstoreController {
         return new ResponseEntity(this.bookstoreService.addNewBook(ISBN, title, description, price, author, genre, publisher, year, copies_sold), HttpStatus.OK);
     }
 
-    @PatchMapping("/{publisherName}/discount/{discountPercent}")
+ @PatchMapping("/{publisherName}/discount/{discountPercent}")
     public ResponseEntity<String> updateDiscountPercentByPublisherName(
             @PathVariable String publisherName,
             @PathVariable Double discountPercent) {
@@ -130,7 +130,8 @@ public class BookstoreController {
         return new ResponseEntity(this.bookstoreService.findBooksByPublisher(publisher), HttpStatus.OK);
     }
 
-    //SHOPPING CART CONTROLLER
+
+ //SHOPPING CART CONTROLLER
 
     //Retrieves User's Shopping Cart
     @GetMapping("/shopping-cart/user-{userid}")
@@ -239,6 +240,7 @@ public class BookstoreController {
 
         return ResponseEntity.ok(responseOrderDTO);
     }
+    
     //Rating and Commenting
     @GetMapping("/getAllBookRatings")
     public ResponseEntity getAllBookRatings(){
@@ -268,3 +270,4 @@ public class BookstoreController {
         return results.get(0);
     }
 }
+

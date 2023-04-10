@@ -1,4 +1,3 @@
-
 package com.example.bookstoreapi;
 
 import com.example.bookstoreapi.Order.Order;
@@ -133,13 +132,14 @@ public class BookstoreService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //    KENNETH ENDPOINT SERVICE
+
+  //    KENNETH ENDPOINT SERVICE
     public ResponseEntity addNewBook(String ISBN, String title, String description, Double price, String author, String genre, String publisher, Integer year, Integer copies_sold){
         bookstoreRepo.addNewBook(ISBN, title, description, price, author, genre, publisher, year, copies_sold);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public List<Book> findBooksByPublisher(String publisher) {
+ public List<Book> findBooksByPublisher(String publisher) {
         return bookstoreRepo.findByPublisherName(publisher);
     }
 
@@ -323,6 +323,7 @@ public class BookstoreService {
     {
         return orderRepo.save(newOrder);
     }
+    
 //Ratings and Comments
     public List<Rating> getAllBookRatings(){
         return  bookstoreRating.findAll();
@@ -350,3 +351,4 @@ public class BookstoreService {
         return bookstoreComment.save(comment);
     }
 }
+
