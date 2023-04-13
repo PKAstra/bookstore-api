@@ -8,11 +8,11 @@ import java.util.List;
 public class ShoppingCart
 {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = ShoppingCartItem.class)
-    @JoinColumn(name = "shoppingcart_id", referencedColumnName = "id")
-    private List<ShoppingCartItem> items;
+    @Column(name = "customer_id")
+    private int customerID;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = ShoppingCartItems.class)
+    @JoinColumn(name = "shoppingcart_id", referencedColumnName = "customer_id")
+    private List<ShoppingCartItems> items;
 
 
     //Constructors
@@ -20,24 +20,24 @@ public class ShoppingCart
     }
 
 
-    public ShoppingCart(int id, List<ShoppingCartItem> items) {
-        this.id = id;
+    public ShoppingCart(int id, List<ShoppingCartItems> items) {
+        this.customerID = id;
         this.items = items;
     }
 
     public int getCustomerID() {
-        return id;
+        return customerID;
     }
 
     public void setCustomerID(int customerID) {
-        this.id = customerID;
+        this.customerID = customerID;
     }
 
-    public List<ShoppingCartItem> getItems() {
+    public List<ShoppingCartItems> getItems() {
         return items;
     }
 
-    public void setItems(List<ShoppingCartItem> items) {
+    public void setItems(List<ShoppingCartItems> items) {
         this.items = items;
     }
 
