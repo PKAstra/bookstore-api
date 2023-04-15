@@ -52,8 +52,8 @@ public class BookstoreService {
     }
 
     public List<WishlistBooks> getAllBooksFromWishlist(Integer wishlist_id){
-        return bookstoreWishlistBooks.findAllBooksWishlist(wishlist_id);
-
+        // logic
+        return bookstoreWishlistBooks.getAllBooksWishlist(wishlist_id);
     }
 
     public ResponseEntity deleteBookWishlist(Integer wishlist_id, Integer book_id){

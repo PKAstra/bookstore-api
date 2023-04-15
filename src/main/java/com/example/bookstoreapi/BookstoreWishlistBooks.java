@@ -15,8 +15,6 @@ public interface BookstoreWishlistBooks extends JpaRepository<WishlistBooks, Int
     @Transactional @Modifying(clearAutomatically = true)
     @Query(value = "INSERT INTO WishlistBooks (wishlist_id, book_id) VALUES (?1, ?2)", nativeQuery = true)
     void addBookWishlistQuery(Integer wishlistId, Integer bookId);
-
     @Query(value = "SELECT w FROM WishlistBooks w WHERE w.wishlist_id = ?1")
-    List<WishlistBooks> findAllBooksWishlist(Integer wishlistId);
-
+    List<WishlistBooks> getAllBooksWishlist(Integer wishlistId);
 }
