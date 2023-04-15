@@ -42,8 +42,8 @@ public class BookstoreController {
     }
 
     @GetMapping("/getAllBooksFromWishlist")
-    public ResponseEntity getAllBooksFromWishlist() {
-        return new ResponseEntity(this.bookstoreService.getAllBooksFromWishlist(), HttpStatus.ACCEPTED);
+    public ResponseEntity getAllBooksFromWishlist(@RequestParam(value = "wishlist_id") Integer wishlist_id) {
+        return new ResponseEntity(this.bookstoreService.getAllBooksFromWishlist(wishlist_id), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/removeBookWishlist")

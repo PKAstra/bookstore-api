@@ -33,6 +33,8 @@ public class BookstoreService {
     @Autowired
     BookstoreComment bookstoreComment;
     @Autowired
+    BookstoreRating bookstoreRating;
+    @Autowired
     UserRepository userRepository;
     @Autowired
     ShoppingCartRepo shoppingCartRepo;
@@ -49,9 +51,9 @@ public class BookstoreService {
         return bookstoreWish.findAll();
     }
 
-    public List<WishlistBooks> getAllBooksFromWishlist(){
+    public List<WishlistBooks> getAllBooksFromWishlist(Integer wishlist_id){
         // logic
-        return bookstoreWishlistBooks.findAll();
+        return bookstoreWishlistBooks.getAllBooksWishlist(wishlist_id);
     }
 
     public ResponseEntity deleteBookWishlist(Integer wishlist_id, Integer book_id){
