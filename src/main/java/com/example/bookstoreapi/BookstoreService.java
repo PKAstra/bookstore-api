@@ -33,6 +33,8 @@ public class BookstoreService {
     @Autowired
     BookstoreComment bookstoreComment;
     @Autowired
+    BookstoreRating bookstoreRating;
+    @Autowired
     UserRepository userRepository;
     @Autowired
     ShoppingCartRepo shoppingCartRepo;
