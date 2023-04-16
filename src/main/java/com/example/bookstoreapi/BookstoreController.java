@@ -263,9 +263,9 @@ public class BookstoreController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/{id}/average-rating")
+    @GetMapping("/{id}/averageRating")
     public Double getBookAverageRating(@PathVariable Integer id) {
-        String query = "SELECT AVG(rating) FROM ratings WHERE book_id = ?";
+        String query = "SELECT ROUND(AVG(rating), 1) FROM ratings WHERE book_id = ?";
         List<Double> results = jdbcTemplate.queryForList(query, Double.class, id);
         return results.get(0);
     }
