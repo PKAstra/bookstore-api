@@ -11,20 +11,11 @@ import java.sql.Timestamp;
 public class Comment{
 
     @Id
-    private Integer id;
     private String comment;
     private Integer book_id;
     private Integer user_id;
     private Timestamp timestamp;
     public Comment() {
-    }
-
-    public Comment(Integer id, String comment, Integer book_id, Integer user_id, Timestamp timestamp) {
-        this.id = id;
-        this.comment = comment;
-        this.book_id = book_id;
-        this.user_id = user_id;
-        this.timestamp = timestamp;
     }
 
     public Comment(String comment, Integer book_id, Integer user_id, Timestamp timestamp) {
@@ -40,14 +31,6 @@ public class Comment{
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getComment() {
